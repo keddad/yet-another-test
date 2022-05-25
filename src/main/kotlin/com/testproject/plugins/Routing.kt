@@ -1,16 +1,24 @@
 package com.testproject.plugins
 
+import com.testproject.models.Account
 import io.ktor.server.routing.*
-import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
-import io.ktor.server.request.*
+import com.testproject.models.Shop
 
-fun Application.configureRouting() {
+fun Application.configureRouting(shop: Shop, account: Account) {
 
     routing {
-        get("/") {
-            call.respondText("Hello World!")
+        get("/account") {
+            call.respond(account)
+        }
+
+        get("/market") {
+            call.respond(shop)
+        }
+
+        get("/meow") {
+            account.balance += 200
         }
     }
 }

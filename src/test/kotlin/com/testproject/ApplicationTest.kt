@@ -15,13 +15,33 @@ import com.testproject.plugins.*
 
 class ApplicationTest {
     @Test
-    fun testRoot() = testApplication {
+    fun testNewMarket() = testApplication {
+        var (shop, account) = loadDb("data.json")
+
         application {
-            configureRouting()
+            configureRouting(shop, account)
+            configureSerialization()
         }
-        client.get("/").apply {
+        client.get("/market").apply {
             assertEquals(HttpStatusCode.OK, status)
-            assertEquals("Hello World!", bodyAsText())
+            assertEquals(
+                "{\"books\":[{\"price\":1000,\"amount\":7,\"id\":0,\"book\":{\"name\":\"Совершенный код\",\"author\":\"Стив Макконелл\"}},{\"price\":1500,\"amount\":15,\"id\":1,\"book\":{\"name\":\"Философия Java\",\"author\":\"Брюс Эккель\"}},{\"price\":2500,\"amount\":10,\"id\":2,\"book\":{\"name\":\"Effective Java\",\"author\":\"Joshua Bloch\"}}]}",
+                bodyAsText()
+            )
+        }
+    }
+
+    @Test
+    fun testNewAccount() = testApplication {
+        var (shop, account) = loadDb("data.json")
+
+        application {
+            configureRouting(shop, account)
+            configureSerialization()
+        }
+        client.get("/account").apply {
+            assertEquals(HttpStatusCode.OK, status)
+            print(bodyAsText())
         }
     }
 }

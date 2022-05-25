@@ -7,19 +7,22 @@
       "author": "Стив Макконелл",
       "name": "Совершенный код",
       "price": 1000,
-      "amount": 7
+      "amount": 7,
+      "id": 0
     },
     {
       "author": "Брюс Эккель",
       "name": "Философия Java",
       "price": 1500,
-      "amount": 15
+      "amount": 15,
+      "id": 1
     },
     {
       "author": "Joshua Bloch",
       "name": "Effective Java",
       "price": 2500,
-      "amount": 10
+      "amount": 10,
+      "id": 2
     }
   ]
 }
