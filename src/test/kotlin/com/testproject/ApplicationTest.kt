@@ -41,7 +41,7 @@ class ApplicationTest {
         }
         client.get("/account").apply {
             assertEquals(HttpStatusCode.OK, status)
-            print(bodyAsText())
+            assertEquals("{\"balance\":20000,\"books\":[]}", bodyAsText())
         }
     }
 }

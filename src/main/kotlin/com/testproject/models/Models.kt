@@ -26,4 +26,7 @@ data class Account(var balance: Int, @EncodeDefault var books: List<CustomerBook
 data class Shop(var books: List<ShopBook>)
 
 @Serializable
+data class LogEntity(var time: Long, var text: String)
+
+@Serializable
 data class JsonContainer(var books: List<JsonBook>, var account: JsonAccount)
