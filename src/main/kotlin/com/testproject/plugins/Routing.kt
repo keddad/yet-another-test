@@ -30,12 +30,12 @@ fun Application.configureRouting(shop: Shop, account: Account, logger: (String) 
                 return@post
             }
 
-            if (book!!.amount * book!!.price > account.balance) {
+            if (book.amount * book.price > account.balance) {
                 call.respond(HttpStatusCode.BadRequest)
                 return@post
             }
 
-            if (book!!.amount < purchaseRequest.amount) {
+            if (book.amount < purchaseRequest.amount) {
                 call.respond(HttpStatusCode.BadRequest)
                 return@post
             }

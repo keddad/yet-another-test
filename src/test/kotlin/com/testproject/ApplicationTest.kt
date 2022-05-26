@@ -12,7 +12,7 @@ import kotlin.test.assertEquals
 class ApplicationTest {
     @Test
     fun testNewMarket() = testApplication {
-        var (shop, account) = loadDb("data.json")
+        val (shop, account) = loadDb("data.json")
 
         application {
             configureRouting(shop, account)
@@ -29,7 +29,7 @@ class ApplicationTest {
 
     @Test
     fun testNewAccount() = testApplication {
-        var (shop, account) = loadDb("data.json")
+        val (shop, account) = loadDb("data.json")
 
         application {
             configureRouting(shop, account)
@@ -43,7 +43,7 @@ class ApplicationTest {
 
     @Test
     fun testInvalidAmount() = testApplication {
-        var (shop, account) = loadDb("data.json")
+        val (shop, account) = loadDb("data.json")
 
         application {
             configureRouting(shop, account)
@@ -59,7 +59,7 @@ class ApplicationTest {
 
     @Test
     fun testInvalidCount() = testApplication {
-        var (shop, account) = loadDb("data.json")
+        val (shop, account) = loadDb("data.json")
 
         application {
             configureRouting(shop, account)
@@ -75,7 +75,7 @@ class ApplicationTest {
 
     @Test
     fun testInvalidId() = testApplication {
-        var (shop, account) = loadDb("data.json")
+        val (shop, account) = loadDb("data.json")
 
         application {
             configureRouting(shop, account)
@@ -91,7 +91,7 @@ class ApplicationTest {
 
     @Test
     fun testValidTransaction() = testApplication {
-        var (shop, account) = loadDb("data.json")
+        val (shop, account) = loadDb("data.json")
 
         application {
             configureRouting(shop, account)
@@ -119,6 +119,32 @@ class ApplicationTest {
                 bodyAsText()
             )
         }
+    }
+
+    @Test
+    fun testZeroItem() = testApplication {
+        val (shop, account) = loadDb("data.json")
+
+        application {
+            configureRouting(shop, account)
+            configureSerialization()
+        }
+        client.post("/market/deal") {
+            setBody("""{"id":0,"amount":7}""")
+            header("Content-Type", ContentType.Application.Json.toString())
+        }.apply {
+            assertEquals(HttpStatusCode.OK, status)
+        }
+
+        client.get("/market").apply {
+            assertEquals(HttpStatusCode.OK, status)
+            assertEquals(
+
+                "{\"books\":[{\"price\":1500,\"amount\":15,\"id\":1,\"book\":{\"name\":\"Философия Java\",\"author\":\"Брюс Эккель\"}},{\"price\":25000,\"amount\":10,\"id\":2,\"book\":{\"name\":\"Effective Java\",\"author\":\"Joshua Bloch\"}}]}",
+                bodyAsText()
+            )
+        }
+
     }
 
 
